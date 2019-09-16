@@ -29,4 +29,9 @@ class PagoFacilException extends DomainError
     {
         return new static('can\'t erase the record.');
     }
+
+    static public function MethodNotExist(): self
+    {
+        return new static('Method not exist');
+    }
 }
