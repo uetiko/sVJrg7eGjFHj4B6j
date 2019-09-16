@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 use Uetiko\Prueba\Backend\Address\Domain\Interfaces\AddressRepository;
+use Uetiko\Prueba\Backend\Address\Domain\Interfaces\AddressRepositoryInterface;
 use Uetiko\Prueba\Backend\Country\Infrastructure\CountryRepository;
 use Uetiko\Prueba\Backend\Country\Domain\Interfaces\CountryRepository as
     CountryRepositoryInterface;
@@ -21,28 +23,6 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->singleton(
-            CreditCardRepository::class, function ($app){
-                return new CreditCardRepository();
-            }
-        );
-        $this->app->singleton(
-            UserRepository::class, function ($app) {
-                return new UserRepository();
-            }
-        );
-        $this->app->singleton(
-            CountryRepository::class, function ($app) {
-                return new CountryRepository();
-            }
-        );
-        $this->app->bind(
-            AddressRepository::class, function ($app) {
-                return new AddressRepository(
-                    $this->app->make(CountryRepositoryInterface::class)
-                );
-            }
-        );
         $this->app->bind(
             CreditCardRepositoryInterfaces::class,
             CreditCardRepository::class
@@ -50,6 +30,38 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             CountryRepositoryInterface::class,
             CountryRepository::class
+        );
+        $this->app->bind(
+            AddressRepositoryInterface::class,
+                AddressRepository::class
+        );
+        $this->app->singleton(
+            CountryRepository::class, function ($app) {
+            /** @var Application $app */
+                return new CountryRepository();
+            }
+        );
+        $this->app->bind(
+            AddressRepository::class, function ($app) {
+                /** @var Application $app */
+                return new AddressRepository(
+                    $app->make(CountryRepositoryInterface::class)
+                );
+            }
+        );
+        $this->app->singleton(
+            CreditCardRepository::class, function ($app){
+            /** @var Application $app */
+                return new CreditCardRepository();
+            }
+        );
+        $this->app->singleton(
+            UserRepository::class, function ($app) {
+            /** @var Application $app */
+                return new UserRepository(
+                    resolve(AddressRepositoryInterface::class)
+                );
+            }
         );
     }
 
