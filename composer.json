@@ -1,0 +1,24 @@
+{
+  "name": "example",
+  "license": "MIT",
+  "type": "project",
+  "description": "test",
+  "require": {
+    "php": "7.3.6",
+
+    "ext-apcu": "*",
+    "ext-bcmath": "*",
+    "ext-ctype": "*",
+    "ext-intl": "*",
+    "ext-json": "*",
+    "ext-zend-opcache": "*",
+    "ext-pdo": "*",
+    "ext-zip": "*",
+    "laravel/installer": "2.1.*",
+  },
+  "require-dev": {
+    "ext-xdebug": "*",
+    "phpstan/phpstan": "^0.10.3",
+    "phpstan/phpstan-mockery": "^0.10.2"
+  }
+}
