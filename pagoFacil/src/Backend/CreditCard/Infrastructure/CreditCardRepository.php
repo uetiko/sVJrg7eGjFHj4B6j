@@ -9,13 +9,17 @@ use Uetiko\Prueba\Backend\CreditCard\Domain\CardId;
 use Uetiko\Prueba\Backend\CreditCard\Domain\CreditCard;
 use Uetiko\Prueba\Backend\CreditCard\Domain\Interfaces\CreditCardRepositoryInterfaces;
 use Uetiko\Prueba\Backend\CreditCard\Domain\Exceptions\CreditCardException;
+use Uetiko\Prueba\Backend\Payment\Domain\Exceptons\PaymentException;
+use Uetiko\Prueba\Backend\Payment\Domain\Payment;
+use Uetiko\Prueba\Backend\Payment\Domain\PaymentId;
+use Uetiko\Prueba\Backend\User\Domain\UserId;
 
 class CreditCardRepository implements CreditCardRepositoryInterfaces
 {
     /**
      * @param CreditCard $creditCard
      */
-    public function save(CreditCard $creditCard): void
+    public function save(CreditCard $creditCard, UserId $userId): void
     {
         DB::table('credit_card')->insert(
             [
@@ -23,6 +27,7 @@ class CreditCardRepository implements CreditCardRepositoryInterfaces
                 'type_card_id' => $this->getTypeCardUuidByName(
                     $creditCard->getTypeCard()
                 ),
+                'user_id' => $userId->getValue(),
                 'number' => encrypt($creditCard->getNumber()),
                 'ctv' => encrypt($creditCard->getCvt()),
                 'expiration_month' => encrypt(
@@ -117,5 +122,36 @@ class CreditCardRepository implements CreditCardRepositoryInterfaces
         }
 
         return $type;
+    }
+
+    /**
+     * @param Payment $payment
+     * @param UserId $userId
+     * @throws PaymentException
+     */
+    public function savePayment(Payment $payment, UserId $userId): void
+    {
+        $this->save($payment->getCard(), $userId->getValue());
+    }
+
+    /**
+     * @param Payment $payment
+     * @param UserId $userId
+     * @throws PaymentException
+     */
+    public function updatePayment(Payment $payment, UserId $userId): void
+    {
+        // TODO: Implement updatePayment() method.
+    }
+
+    /**
+     * @param UserId $userId
+     * @return Payment
+     * @throws PaymentException
+     */
+    public function findPayment(UserId $userId): Payment
+    {
+        $creditCard = $this->findByUserId($userId);
+        return new Payment(PaymentId::generateUuid(), $creditCard);
     }
 }

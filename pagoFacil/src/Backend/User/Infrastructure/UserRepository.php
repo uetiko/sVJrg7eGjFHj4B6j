@@ -8,6 +8,7 @@ use Uetiko\Prueba\Backend\Address\Domain\Interfaces\AddressRepositoryInterface;
 use Uetiko\Prueba\Backend\Contact\Domain\Contact;
 use Uetiko\Prueba\Backend\Contact\Domain\Exceptions\ContactException;
 use Uetiko\Prueba\Backend\Contact\Domain\Interfaces\ContactRepository;
+use Uetiko\Prueba\Backend\CreditCard\Infrastructure\CreditCardRepository;
 use Uetiko\Prueba\Backend\User\Domain\Exceptions\UserException;
 use Uetiko\Prueba\Backend\User\Domain\Interfaces\UserRepositoryInterfaces;
 use Uetiko\Prueba\Backend\User\Domain\User;
@@ -19,10 +20,13 @@ class UserRepository implements UserRepositoryInterfaces
     private $addressRepository;
     /** @var ContactRepository $contactRepository */
     private $contactRepository;
+    /** @var CreditCardRepository $cardRepository */
+    private $cardRepository;
 
     public function __construct(
         AddressRepositoryInterface $addressRepository,
-        ContactRepository $contactRepository
+        ContactRepository $contactRepository,
+        CreditCardRepository $cardRepository
     )
     {
         $this->addressRepository = $addressRepository;

@@ -13,6 +13,9 @@ use Uetiko\Prueba\Backend\CreditCard\Infrastructure\CreditCardRepository;
 use Uetiko\Prueba\Backend\CreditCard\Domain\Interfaces\CreditCardRepositoryInterfaces;
 use Uetiko\Prueba\Backend\User\Infrastructure\UserRepository;
 use Uetiko\Prueba\Backend\User\Domain\Interfaces\UserRepositoryInterfaces;
+use Uetiko\Prueba\Backend\Contact\Domain\Interfaces\ContactRepository as
+    IContactRepository;
+use Uetiko\Prueba\Backend\Contact\Infrastructure\ContactRepository;
 
 class RepositoryServiceProvider extends ServiceProvider
 {
@@ -34,6 +37,14 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->bind(
             AddressRepositoryInterface::class,
                 AddressRepository::class
+        );
+        $this->app->bind(
+            IContactRepository::class,
+            ContactRepository::class
+        );
+        $this->app->bind(
+            UserRepositoryInterfaces::class,
+            UserRepository::class
         );
         $this->app->singleton(
             CountryRepository::class, function ($app) {
@@ -59,7 +70,9 @@ class RepositoryServiceProvider extends ServiceProvider
             UserRepository::class, function ($app) {
             /** @var Application $app */
                 return new UserRepository(
-                    resolve(AddressRepositoryInterface::class)
+                    resolve(AddressRepositoryInterface::class),
+                    resolve(IContactRepository::class),
+                    resolve(CreditCardRepositoryInterfaces::class)
                 );
             }
         );
