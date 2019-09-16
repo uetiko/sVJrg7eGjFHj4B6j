@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Uetiko\Prueba\Backend\Address\Domain;
 
 use Uetiko\Prueba\Backend\Address\Domain\AddressId;
+use Uetiko\Prueba\Backend\Country\Domain\Country;
 
 class Address
 {
@@ -20,10 +21,12 @@ class Address
     private $state;
     /** @var string $cp */
     private $cp;
+    /** @var Country $country */
+    private $country;
 
     public function __construct(
         AddressId $id, string $street, string  $outdoorNumber, string $suburb,
-        string $township, string $state, string $cp
+        string $township, string $state, string $cp, Country $country
     )
     {
         $this->id = $id;
@@ -33,6 +36,15 @@ class Address
         $this->township = $township;
         $this->state = $state;
         $this->cp = $cp;
+        $this->country = $country;
+    }
+
+    /**
+     * @return Country
+     */
+    public function getCountry(): Country
+    {
+        return $this->country;
     }
 
     /**
