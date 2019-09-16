@@ -22,7 +22,7 @@ class CreditCard
 
     public function __construct(
         CardId $id, string $typeCard, int $number, string $cvt,
-        DateTime $expiration, string  $lastDigits
+        DateTime $expiration
     )
     {
         $this->id = $id;
@@ -30,13 +30,12 @@ class CreditCard
         $this->number = $number;
         $this->cvt = $cvt;
         $this->expiration = $expiration;
-        $this->lastDigits = $lastDigits;
     }
 
     /**
      * @return \Uetiko\Prueba\Backend\CreditCard\Domain\CardId
      */
-    public function getId(): \Uetiko\Prueba\Backend\CreditCard\Domain\CardId
+    public function getId(): CardId
     {
         return $this->id;
     }
@@ -87,5 +86,10 @@ class CreditCard
     public function getLastDigits(): string
     {
         return $this->lastDigits;
+    }
+
+    protected function setLastDigits(string $numbers): void
+    {
+        $this->lastDigits = substr($numbers, -4);
     }
 }
