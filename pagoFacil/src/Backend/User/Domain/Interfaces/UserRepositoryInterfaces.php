@@ -3,6 +3,7 @@ declare(strict_types=1);
 namespace Uetiko\Prueba\Backend\User\Domain\Interfaces;
 
 use stdClass;
+use Uetiko\Prueba\Backend\Address\Domain\Exceptions\AddressException;
 use Uetiko\Prueba\Backend\User\Domain\Exceptions\UserException;
 use Uetiko\Prueba\Backend\User\Domain\User;
 use Uetiko\Prueba\Backend\User\Domain\UserId;
@@ -47,4 +48,10 @@ interface UserRepositoryInterfaces
      * @throws UserException
      */
     public function findAll(): \ArrayAccess;
+
+    /**
+     * @param User $user
+     * @throws AddressException
+     */
+    public function saveAddress(User $user): void;
 }
