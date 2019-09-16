@@ -5,6 +5,9 @@ namespace Uetiko\Prueba\Backend\User\Infrastructure;
 use Illuminate\Support\Facades\DB;
 use Uetiko\Prueba\Backend\Address\Domain\Exceptions\AddressException;
 use Uetiko\Prueba\Backend\Address\Domain\Interfaces\AddressRepositoryInterface;
+use Uetiko\Prueba\Backend\Contact\Domain\Contact;
+use Uetiko\Prueba\Backend\Contact\Domain\Exceptions\ContactException;
+use Uetiko\Prueba\Backend\Contact\Domain\Interfaces\ContactRepository;
 use Uetiko\Prueba\Backend\User\Domain\Exceptions\UserException;
 use Uetiko\Prueba\Backend\User\Domain\Interfaces\UserRepositoryInterfaces;
 use Uetiko\Prueba\Backend\User\Domain\User;
@@ -14,10 +17,16 @@ class UserRepository implements UserRepositoryInterfaces
 {
     /** @var AddressRepositoryInterface $addressRepository */
     private $addressRepository;
+    /** @var ContactRepository $contactRepository */
+    private $contactRepository;
 
-    public function __construct(AddressRepositoryInterface $addressRepository)
+    public function __construct(
+        AddressRepositoryInterface $addressRepository,
+        ContactRepository $contactRepository
+    )
     {
         $this->addressRepository = $addressRepository;
+        $this->contactRepository = $contactRepository;
     }
 
     /**
@@ -101,5 +110,14 @@ class UserRepository implements UserRepositoryInterfaces
     public function saveAddress(User $user): void
     {
         $this->addressRepository->save($user->getAddress(), $user->getId());
+    }
+
+    /**
+     * @param User $user
+     * @throws ContactException
+     */
+    public function saveContact(User $user): void
+    {
+        $this->contactRepository->save($user->getContact(), $user->getId());
     }
 }

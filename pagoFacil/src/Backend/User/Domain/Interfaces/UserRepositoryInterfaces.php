@@ -4,6 +4,8 @@ namespace Uetiko\Prueba\Backend\User\Domain\Interfaces;
 
 use stdClass;
 use Uetiko\Prueba\Backend\Address\Domain\Exceptions\AddressException;
+use Uetiko\Prueba\Backend\Contact\Domain\Contact;
+use Uetiko\Prueba\Backend\Contact\Domain\Exceptions\ContactException;
 use Uetiko\Prueba\Backend\User\Domain\Exceptions\UserException;
 use Uetiko\Prueba\Backend\User\Domain\User;
 use Uetiko\Prueba\Backend\User\Domain\UserId;
@@ -54,4 +56,10 @@ interface UserRepositoryInterfaces
      * @throws AddressException
      */
     public function saveAddress(User $user): void;
+
+    /**
+     * @param User $user
+     * @throws ContactException
+     */
+    public function saveContact(User $user): void;
 }

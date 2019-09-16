@@ -6,6 +6,7 @@ use Uetiko\Prueba\Backend\Contact\Domain\Contact;
 use Uetiko\Prueba\Backend\Contact\Domain\ContactId;
 use Uetiko\Prueba\Backend\Contact\Domain\Email;
 use Uetiko\Prueba\Backend\Contact\Domain\Exceptions\ContactException;
+use Uetiko\Prueba\Backend\User\Domain\UserId;
 
 interface ContactRepository
 {
@@ -13,9 +14,10 @@ interface ContactRepository
 
     /**
      * @param Contact $contact
+     * @param UserId $userId
      * @throws ContactException
      */
-    public function save(Contact $contact): void;
+    public function save(Contact $contact, UserId $userId): void;
 
     /**
      * @param Contact $contact
@@ -35,6 +37,13 @@ interface ContactRepository
      * @throws ContactException
      */
     public function findById(ContactId $id):Contact;
+
+    /**
+     * @param UserId $userId
+     * @return Contact
+     * @throws ContactException
+     */
+    public function findByUserId(UserId $userId): Contact;
 
     /**
      * @param string $code
