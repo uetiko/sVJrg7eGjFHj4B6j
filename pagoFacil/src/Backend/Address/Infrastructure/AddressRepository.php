@@ -21,9 +21,22 @@ class AddressRepository implements AddressRepositoryInterface
         $this->countryRepository = $countryRepository;
     }
 
-    public function save(Address $address): void
+    public function save(Address $address, UserId $userId): void
     {
-        // TODO: Implement save() method.
+        DB::table(self::TABLE)
+            ->insert(
+                [
+                    'id' => $address->getId()->getValue(),
+                    'user_id' => $userId->getValue(),
+                    'country_id' => $address->getCountry()->getId()->getValue(),
+                    'street' => $address->getStreet(),
+                    'street_number' => $address->getOutdoorNumber(),
+                    'suburb' => $address->getSuburb(),
+                    'township' => $address->getTownship(),
+                    'state' => $address->getState(),
+                    'cp' => $address->getCp()
+                ]
+            );
     }
 
     public function findById(AddressId $id): void
