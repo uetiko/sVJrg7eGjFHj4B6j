@@ -39,7 +39,7 @@ class Uuid
 
     static public function generateUuid(): self
     {
-        return new static(UuidLib::uuid4()->toString());
+        return new self(UuidLib::uuid4()->toString());
     }
 
     public function __toString(): string

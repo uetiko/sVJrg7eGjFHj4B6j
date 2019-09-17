@@ -9,8 +9,10 @@ use Uetiko\Prueba\Backend\PagoFacil\Domain\Exceptions\PagoFacilException;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\Interfaces\TransferRepository;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\MethodId;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\TransferId;
+use Uetiko\Prueba\Backend\PagoFacil\Domain\Transfer as TransferDomain;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\Interfaces\MethodRepository;
 use Uetiko\Prueba\Backend\User\Domain\Interfaces\UserRepositoryInterfaces;
+use Uetiko\Prueba\Backend\User\Domain\UserId;
 
 class Transfer implements TransferRepository
 {
@@ -45,19 +47,19 @@ class Transfer implements TransferRepository
 
 
     /**
-     * @param \Uetiko\Prueba\Backend\PagoFacil\Domain\Transfer $transfer
-     * @throws PagoFacilException
+     * @param TransferDomain $transfer
+     * @param UserId $userId
      */
-    public function save(\Uetiko\Prueba\Backend\PagoFacil\Domain\Transfer $transfer): void
+    public function save(TransferDomain $transfer, UserId $userId): void
     {
         // TODO: Implement save() method.
     }
 
     /**
-     * @param \Uetiko\Prueba\Backend\PagoFacil\Domain\Transfer $transfer
+     * @param TransferDomain $transfer
      * @throws PagoFacilException
      */
-    public function update(\Uetiko\Prueba\Backend\PagoFacil\Domain\Transfer $transfer): void
+    public function update(TransferDomain $transfer): void
     {
         // TODO: Implement update() method.
     }

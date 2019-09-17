@@ -7,6 +7,7 @@ use Uetiko\Prueba\Backend\PagoFacil\Domain\Exceptions\PagoFacilException;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\MethodId;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\Transfer;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\TransferId;
+use Uetiko\Prueba\Backend\User\Domain\UserId;
 
 interface TransferRepository
 {
@@ -16,7 +17,7 @@ interface TransferRepository
      * @param Transfer $transfer
      * @throws PagoFacilException
      */
-    public function save(Transfer $transfer):void;
+    public function save(Transfer $transfer, UserId $userId):void;
 
     /**
      * @param Transfer $transfer
