@@ -34,4 +34,8 @@ class PagoFacilException extends DomainError
     {
         return new static('Method not exist');
     }
+    static public function TransactionError(string $message, int $code): self
+    {
+        return new static($message, $code);
+    }
 }

@@ -2,10 +2,12 @@
 declare(strict_types=1);
 namespace Uetiko\Prueba\Backend\PagoFacil\Infrastructure;
 
+use Illuminate\Support\Facades\DB;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\Exceptions\PagoFacilException;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\Interfaces\MethodRepository as
     Repository;
 use Uetiko\Prueba\Backend\PagoFacil\Domain\Method;
+use Uetiko\Prueba\Backend\PagoFacil\Domain\MethodId;
 
 class MethodRepository implements Repository
 {
@@ -35,6 +37,13 @@ class MethodRepository implements Repository
      */
     public function findByName(string $name): Method
     {
-        // TODO: Implement findByName() method.
+        $method = DB::table(self::TABLE)
+            ->where('name', $name)
+            ->first();
+
+        if(is_null($method)) {
+            throw PagoFacilException::MethodNotExist();
+        }
+        return new Method(new MethodId($method->id), $method->name);
     }
 }

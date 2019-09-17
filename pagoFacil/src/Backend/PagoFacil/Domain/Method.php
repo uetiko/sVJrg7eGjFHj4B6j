@@ -12,4 +12,32 @@ class Method
     private $name;
     /** @var string $descrive */
     private $descrive;
+
+    /**
+     * Method constructor.
+     * @param \Uetiko\Prueba\Backend\PagoFacil\Domain\MethodId $id
+     * @param string $name
+     */
+    public function __construct(MethodId $id, string $name)
+    {
+        $this->id = $id;
+        $this->name = $name;
+    }
+
+    /**
+     * @return \Uetiko\Prueba\Backend\PagoFacil\Domain\MethodId
+     */
+    public function getId(): \Uetiko\Prueba\Backend\PagoFacil\Domain\MethodId
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getName(): string
+    {
+        return $this->name;
+    }
+
 }
